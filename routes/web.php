@@ -43,17 +43,18 @@ Route::delete('/login-delete/{user_ID}',function ($user_ID) {
 });
 
 
-Route::post('/update/{user_ID}',function ($user_ID) {
+Route::post('/edit/{user_ID}',function ($user_ID) {
     $user =User::find($user_ID);
     return view('edit')->with('user',$user);
 
 });
-Route::post('/edit/{user_ID}',function ( Request $request,$user_ID) {
+Route::put('/update/{user_ID}',function ( Request $request,$user_ID) {
     $user =User::find($user_ID);
-    $user->username =$request->input('username','');
-    $user->email=$request->input('email','');
-    $user->password=$request->input('password','');;
+    $user->username = $request->username;
+    $user->email=    $request->email;
+    $user->password=  $request->password;
     $user->save();
+    Session:: flash('message','رکورد ویرایش  شد.');
    // $user->update(['username'=>$request->username,'email'=>$request->email,'password'=>$request->password,]);
     return redirect('/login-show');
 

@@ -41,7 +41,7 @@
         </form>
     </td>
         <td>
-            <form action="edit/{{$user->user_ID}}" method="post">
+            <form action="/edit/{{$user->user_ID}}" method="post">
 
                 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
                 @method('post')
