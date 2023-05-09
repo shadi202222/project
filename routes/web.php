@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 
 use  Illuminate\Http\Request;
+use App\Http\Middleware\TestMiddleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +21,16 @@ use  Illuminate\Http\Request;
 //Route::get('/login', function () {
   //  return view('login');
 //});
+
+Route::middleware([TestMiddleware::class])->group(function () {
+    Route::get('/login-show', function () {
+        $records= DB::table('users')->get();
+        return view('users.list',["users"=>$records]);
+    });
+
+
+
+
 Route::get('/', function () {
     return view('house');
 
@@ -28,14 +39,14 @@ Route::get('/', function () {
 Route::get('/login-form','\App\Http\Controllers\UserController@loginform');
 Route::post('/login-user','\App\Http\Controllers\UserController@store');
 
-Route::get('/login-show', function () {
-    $records= DB::table('users')->get();
-   return view('users.list',["users"=>$records]);
-});
-Route::delete('/login-delete/{user_ID}',function ($user_ID) {
-   $user =User::find($user_ID);
+//Route::get('/login-show', function () {
+  //  $records= DB::table('users')->get();
+   //return view('users.list',["users"=>$records]);
+//});
+//Route::delete('/login-delete/{user_ID}',function ($user_ID) {
+  // $user =User::find($user_ID);
 
-        $user->delete();
+      //  $user->delete();
 
 
   Session:: flash('message','رکورد حدف شد.');
